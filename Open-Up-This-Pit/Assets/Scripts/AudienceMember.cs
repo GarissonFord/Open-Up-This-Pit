@@ -6,58 +6,24 @@ public class AudienceMember : MonoBehaviour
 {
     public Rigidbody rb;
     public bool grounded;
+    public int band;
+
+    public float rotationSpeed = 10f;
+
+    Quaternion currentRotation;
 
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        band = Random.Range(0, 8);
     }
 
     // Update is called once per frame
     void Update()
-    {
-        //if grounded
-             //if upright
-             //if not upright
-                  //move upright
-        if(grounded)
-        {
-            ReturnToOriginalRotation();
-        }
+    {   
+        Vector3 audioVector = new Vector3(AudioPeer._audioBandBuffer[band], AudioPeer._audioBandBuffer[band], AudioPeer._audioBandBuffer[band]) * rotationSpeed;
+        transform.Rotate(audioVector);
     }
-
-    public void ReturnToOriginalRotation()
-    {
-        float abs = Mathf.Abs(Quaternion.Dot(rb.rotation, Quaternion.Euler(Vector3.zero)));
-        if (abs >= 0.999f)
-        {
-            rb.angularVelocity = Vector3.zero;
-            //rb.freezeRotation = true;
-            //freezeTime = DateTime.Now;
-            //ReturnReleased();
-        }
-        else
-        {
-            var target = Quaternion.Euler(Vector3.zero) * Quaternion.Inverse(rb.rotation);
-            rb.AddTorque(target.x, target.y, target.z, ForceMode.VelocityChange);
-        }
-    }
-
-    public void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("Ground"))
-            grounded = true;
-    }
-
-    public void OnCollisionStay(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("Ground"))
-            grounded = true;
-    }
-
-    public void OnCollisionExit(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("Ground"))
-            grounded = false;
-    }
+    
 }

@@ -8,7 +8,7 @@ public class AudienceManager : MonoBehaviour
 
     public int audienceSize;
     //Limits of the x-coordinate of an audience member, y will always be 1
-    public float xMin, xMax, zMin, zMax;
+    public float xMin, xMax, yMin, yMax, zMin, zMax;
 
     public GameObject audienceMember;
 
@@ -21,7 +21,7 @@ public class AudienceManager : MonoBehaviour
     {
         for(int i = 1; i < audienceSize; i++)
         {
-            Vector3 spawnLocation = new Vector3(Random.Range(xMin, xMax), 1.5f, Random.Range(zMin, zMax));
+            Vector3 spawnLocation = new Vector3(Random.Range(xMin, xMax), Random.Range(yMin, yMax), Random.Range(zMin, zMax));
             Instantiate(audienceMember, spawnLocation, Quaternion.Euler(Vector3.zero));
         }
     }
