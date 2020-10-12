@@ -9,10 +9,16 @@ public class ParamCube : MonoBehaviour
     public bool _useBuffer;
     Material _material;
 
+    public bool randomBand;
+
     // Start is called before the first frame update
     void Start()
     {
         _material = GetComponent<MeshRenderer>().materials[0];
+        if (randomBand)
+        {
+            _band = Random.RandomRange(0, 8);
+        }
     }
 
     // Update is called once per frame
